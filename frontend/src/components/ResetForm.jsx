@@ -11,47 +11,47 @@ import { resetFields } from '../inputsData';
 
 const initialValues = { password: '', confirmPassword: '' };
 
-const ResetForm = () => {
-	const navigate = useNavigate();
+function ResetForm() {
+  const navigate = useNavigate();
 
-	const { username } = useAuthStore(state => state.auth);
+  const { username } = useAuthStore((state) => state.auth);
 
-	const resetQuery = useQuery({
-		queryKey: ['Reset'],
-		queryFn: createResetSession,
-		onError: error => {
-			toast.error(error?.response.data.message);
-		},
-		refetchOnWindowFocus: false,
-	});
+  const resetQuery = useQuery({
+    queryKey: ['Reset'],
+    queryFn: createResetSession,
+    onError: (error) => {
+      toast.error(error?.response.data.message);
+    },
+    refetchOnWindowFocus: false,
+  });
 
-	const { mutate: resetPasswordMutation, isLoading } = useMutation({
-		mutationFn: resetPassword,
-		onSuccess: data => {
-			toast.success(data?.data.message);
-			navigate('/');
-		},
-		onError: error => {
-			toast.error(error?.response.data.message);
-		},
-	});
+  const { mutate: resetPasswordMutation, isLoading } = useMutation({
+    mutationFn: resetPassword,
+    onSuccess: (data) => {
+      toast.success(data?.data.message);
+      navigate('/');
+    },
+    onError: (error) => {
+      toast.error(error?.response.data.message);
+    },
+  });
 
-	const onSubmit = values =>
-		resetPasswordMutation({ password: values.password, username });
+  const onSubmit = (values) =>
+    resetPasswordMutation({ password: values.password, username });
 
-	const formik = useFormikForm({ initialValues, onSubmit });
+  const formik = useFormikForm({ initialValues, onSubmit });
 
-	return (
-		<Form
-			onSubmit={formik.handleSubmit}
-			formik={formik}
-			isLoading={isLoading}
-			btnLoadingText='Password resetting...'
-			btnText='Reset Password'
-			fields={resetFields}
-			flexContainer={true}
-		/>
-	);
-};
+  return (
+    <Form
+      onSubmit={formik.handleSubmit}
+      formik={formik}
+      isLoading={isLoading}
+      btnLoadingText="Password resetting..."
+      btnText="Reset Password"
+      fields={resetFields}
+      flexContainer
+    />
+  );
+}
 
 export default ResetForm;

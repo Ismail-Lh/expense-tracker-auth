@@ -9,35 +9,35 @@ import { generateOtp } from '../lib/apiRequest';
 
 import RecoveryForm from '../components/RecoveryForm';
 
-const Recovery = () => {
-	const { username } = useAuthStore(state => state.auth);
+function Recovery() {
+  const { username } = useAuthStore((state) => state.auth);
 
-	const resendOtp = () => {
-		let sentPromise = generateOtp(username);
+  const resendOtp = () => {
+    const sentPromise = generateOtp(username);
 
-		toast.promise(sentPromise, {
-			loading: 'Sending...',
-			success: <b>OTP has been send to your email!</b>,
-			error: <b>Could not Send it!</b>,
-		});
-	};
+    toast.promise(sentPromise, {
+      loading: 'Sending...',
+      success: <b>OTP has been send to your email!</b>,
+      error: <b>Could not Send it!</b>,
+    });
+  };
 
-	return (
-		<Container style={{ display: 'grid', alignItems: 'center', height: '80%' }}>
-			<FormHeader
-				title='Recovery!'
-				subTitle='Enter the OTP to recover your password.'
-			/>
+  return (
+    <Container style={{ display: 'grid', alignItems: 'center', height: '80%' }}>
+      <FormHeader
+        title="Recovery!"
+        subTitle="Enter the OTP to recover your password."
+      />
 
-			<RecoveryForm />
+      <RecoveryForm />
 
-			<FormFooter
-				text="Can't get OTP?"
-				btnText='Resend'
-				onClick={() => resendOtp()}
-			/>
-		</Container>
-	);
-};
+      <FormFooter
+        text="Can't get OTP?"
+        btnText="Resend"
+        onClick={() => resendOtp()}
+      />
+    </Container>
+  );
+}
 
 export default Recovery;

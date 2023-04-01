@@ -1,0 +1,15 @@
+{
+	"name": "expense-tracker-auth",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"prepare": "cd .. && husky install frontend/.husky"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"husky": "^8.0.0"
+	}
+}

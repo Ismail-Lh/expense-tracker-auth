@@ -14,51 +14,51 @@ import PersistLogin from './components/PersistLogin';
 
 // ?: Root routes
 const router = createBrowserRouter([
-	{ path: '/', element: <Username /> },
-	{ path: '/register', element: <Register /> },
-	{
-		path: '/password',
-		element: (
-			<ProtectedRoute>
-				<Password />
-			</ProtectedRoute>
-		),
-	},
-	{
-		path: '/profile',
-		element: (
-			<PersistLogin>
-				<RequireAuth>
-					<Profile />
-				</RequireAuth>
-			</PersistLogin>
-		),
-	},
-	{
-		path: '/reset',
-		element: (
-			<ProtectedRoute>
-				<Reset />
-			</ProtectedRoute>
-		),
-	},
-	{
-		path: '/recovery',
-		element: (
-			<ProtectedRoute>
-				<Recovery />
-			</ProtectedRoute>
-		),
-	},
-	{ path: '*', element: <PageNotFound /> },
+  { path: '/', element: <Username /> },
+  { path: '/register', element: <Register /> },
+  {
+    path: '/password',
+    element: (
+      <ProtectedRoute>
+        <Password />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/profile',
+    element: (
+      <PersistLogin>
+        <RequireAuth>
+          <Profile />
+        </RequireAuth>
+      </PersistLogin>
+    ),
+  },
+  {
+    path: '/reset',
+    element: (
+      <ProtectedRoute>
+        <Reset />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/recovery',
+    element: (
+      <ProtectedRoute>
+        <Recovery />
+      </ProtectedRoute>
+    ),
+  },
+  { path: '*', element: <PageNotFound /> },
 ]);
 
 function App() {
-	return (
-		<main>
-			<RouterProvider router={router} />
-		</main>
-	);
+  return (
+    <main>
+      <RouterProvider router={router} />
+    </main>
+  );
 }
 
 export default App;

@@ -1,53 +1,57 @@
 import toast from 'react-hot-toast';
 
-const pswRegExp = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+const pswRegExp = /[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/;
 const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-const verifyFields = (errors = {}, values) => {
-	const fieldsName = Object.keys(values);
+const verifyFields = (values, errors = {}) => {
+  const fieldsName = Object.keys(values);
 
-	fieldsName.forEach(field => {
-		if (
-			field === 'username' ||
-			field === 'email' ||
-			field === 'password' ||
-			field === 'userName'
-		) {
-			if (!values[field])
-				return (errors[field] = toast.error(`${field} required...!`));
+  const newErrors = errors;
 
-			if (values[field].includes(' '))
-				return (errors[field] = toast.error(`Invalid ${field}!`));
+  fieldsName.forEach((field) => {
+    if (
+      field === 'username' ||
+      field === 'email' ||
+      field === 'password' ||
+      field === 'userName'
+    ) {
+      if (!values[field])
+        newErrors[field] = toast.error(`${field} required...!`);
 
-			if (field === 'password') {
-				if (values.password.length < 4)
-					return (errors[field] = toast.error(
-						`Password must be more than 4 characters long!`
-					));
+      if (values[field].includes(' '))
+        newErrors[field] = toast.error(`Invalid ${field}!`);
 
-				if (!pswRegExp.test(values.password))
-					return (errors.password = toast.error(
-						'Password must have special character (!@#$%^&)!'
-					));
+      if (field === 'password') {
+        if (values.password.length < 4)
+          newErrors[field] = toast.error(
+            `Password must be more than 4 characters long!`
+          );
 
-				if (values.password && values.confirmPassword) {
-					if (values.password !== values.confirmPassword)
-						return (errors.exist = toast.error('Passwords not match...!'));
-				}
-			}
+        if (!pswRegExp.test(values.password))
+          newErrors.password = toast.error(
+            'Password must have special character (!@#$%^&)!'
+          );
 
-			if (field === 'email') {
-				if (!emailRegExp.test(values.email))
-					return (errors.email = toast.error('Invalid email address...!'));
-			}
-		}
-	});
+        if (values.password && values.confirmPassword) {
+          if (values.password !== values.confirmPassword)
+            newErrors.exist = toast.error('Passwords not match...!');
+        }
+      }
 
-	return errors;
+      if (field === 'email') {
+        if (!emailRegExp.test(values.email))
+          newErrors.email = toast.error('Invalid email address...!');
+      }
+    }
+  });
+
+  return newErrors;
 };
 
-export const validateFields = values => {
-	const errors = verifyFields({}, values);
+const validateFields = (values) => {
+  const errors = verifyFields(values, {});
 
-	return errors;
+  return errors;
 };
+
+export default validateFields;
